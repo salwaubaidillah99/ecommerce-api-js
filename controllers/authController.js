@@ -1,43 +1,47 @@
 const authService = require('../services/authService');
+const response = require('../utils/response');
 
 const authController = {
 
-    //Register User
+    // Register User
     register: async (req, res) => {
         try {
             const { name, email, password } = req.body;
-            //Validation input 
             if (!name || !email || !password) {
-                return res.status(400).json({ error: 'Name, email, and password are required' });
+                return response.validationError(res, 
+                    'Name, email, and password are required');
             }
 
             const newUser = await authService.register(name, email, password);
-            res.status(201).json({
-                message: 'User registered successfully',
-                user: newUser,
-            });
-        } catch (error) {
+            return response.success(res, 
+                'User registered successfully', newUser, 201);
+        } 
+        catch (error) {
+            if (error.message === 'Email is already registered') {
+                return response.error(res, error.message, 400);
+            }
             console.error(error);
-            res.status(500).json({ error: 'Internal Server Error: Failed to register user' });
+            return response.error(res, 
+                'Internal Server Error: Failed to register user');
         }
     },
 
-    //Login User 
+    // Login User
     login: async (req, res) => {
         try {
             const { email, password } = req.body;
-            //Validation input
             if (!email || !password) {
-                return res.status(400).json({ error: 'Email and password are required' });
+                return response.validationError(res, 
+                    'Email and password are required');
             }
-            const token = await authService.login(email, password);
-            res.status(200).json({
-                message: 'Login successful',
-                token,
-            });
-        } catch (error) {
+
+            const user = await authService.login(email, password);
+            return response.success(res, 
+                'Login successful', user);
+        } 
+        catch (error) {
             console.error(error);
-            res.status(400).json({ error: error.message });
+            return response.error(res, error.message, 400);
         }
     },
 };

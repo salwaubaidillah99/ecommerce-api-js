@@ -9,7 +9,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "api-ecommerce-go": "file:",
     "bcryptjs": "^2.4.3",
@@ -24,5 +23,6 @@
     "sequelize": "^6.37.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
-  }
+  },
+  "description": ""
 }

@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db');
+const { sequelize } = require('../config/sequelize.js');
 
 // Defining the User model
 const User = sequelize.define('User', {
@@ -26,8 +26,6 @@ const User = sequelize.define('User', {
     tableName: 'users', 
 });
 
-User.sync({ force: false }).then(() => {
-    console.log('User table created or already exists.');
-});
+User.sync({ force: false }).then(() => {});
 
 module.exports = User;

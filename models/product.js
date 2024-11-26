@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db');
+const { sequelize } = require('../config/sequelize.js');
 
 // Defining the Product model
 const Product = sequelize.define('Product', {
@@ -30,8 +30,7 @@ const Product = sequelize.define('Product', {
 });
 
 
-Product.sync({ force: false }).then(() => {
-    console.log('Product table created or already exists.');
+Product.sync({ force: false }).then(() => {;
 });
 
 module.exports = Product;

@@ -4,7 +4,7 @@ const cors = require('cors');
 const { swaggerUi, swaggerSpec } = require('./sawgger/swagger');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
-const { connectDB } = require('./config/db');
+const { sequelize  } = require('./config/sequelize');
 
 // Load environment variables
 dotenv.config();
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to database
-connectDB();
+sequelize.authenticate();
 
 // Swagger documentation route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
