@@ -1,3 +1,4 @@
+// modelUser.js
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/sequelize.js');
 
@@ -29,3 +30,4 @@ const User = sequelize.define('User', {
 User.sync({ force: false }).then(() => {});
 
 module.exports = User;
+

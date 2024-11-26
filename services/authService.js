@@ -1,14 +1,17 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { JWT_SECRET } = require('../config/sequelize'); // Import JWT_SECRET
+const moment = require('moment');
+const UserToken = require('../models/usertoken');
+const { JWT_SECRET } = require('../config/sequelize'); 
 
 const authService = {
     //Register User
     register: async (name, email, password) => {
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
-            throw new Error();
+            console.log(`Email ${email} already exists.`);
+            throw new Error('Email is already registered');
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,10 +39,18 @@ const authService = {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw new Error('Invalid credentials');
 
-        // Gunakan JWT_SECRET untuk membuat token
-        const token = jwt.sign({ user_id: user.user_id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ user_id: user.id }, JWT_SECRET, { expiresIn: '30d' });
+        const expiredAt = new Date();
+        expiredAt.setDate(expiredAt.getDate() + 30);
+
+        await UserToken.create({
+            user_id: user.id,
+            token: token,
+            expiredAt: expiredAt
+        });
+
         return {
-            user_id: user.user_id,
+            user_id: user.id,
             name: user.name,
             email: user.email,
             token

@@ -1,5 +1,5 @@
 const express = require('express');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/authController'); // Pastikan path impor sudah benar
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -12,6 +12,7 @@ router.use((req, res, next) => {
     next();
 });
 
+// Pastikan endpoint dan controller dipetakan dengan benar
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 
