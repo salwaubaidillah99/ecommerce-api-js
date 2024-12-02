@@ -1,5 +1,6 @@
 const express = require('express');
 const productController = require('../controllers/productController');
+const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -11,10 +12,10 @@ router.use((req, res, next) => {
     });
     next();
 });
-router.post('/', productController.create);
+router.post('/',authMiddleware.authenticate, authMiddleware.authorizeAdmin, productController.create);
 router.get('/', productController.getAll);
 router.get('/:id', productController.getById);
-router.put('/:id', productController.update);
-router.delete('/:id', productController.delete);
+router.put('/:id',authMiddleware.authenticate, authMiddleware.authorizeAdmin, productController.update);
+router.delete('/:id', authMiddleware.authenticate, authMiddleware.authorizeAdmin, productController.delete);
 
 module.exports = router;

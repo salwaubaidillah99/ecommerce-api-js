@@ -23,6 +23,11 @@ const swaggerOptions = {
                 },
             },
         },
+        security : [
+            {
+                bearerAuth: [],
+            }
+        ]
     },
     apis: [
         // Path ke file-file dokumentasi per-module

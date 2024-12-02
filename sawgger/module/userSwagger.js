@@ -27,6 +27,10 @@
  *               password:
  *                 type: string
  *                 description: Password of the user
+ *               role :
+ *                  type : string
+ *                  description: Role of te user ('user' or 'admin')
+ *                  example: user
  *     responses:
  *       201:
  *         description: User registered successfully

@@ -6,13 +6,13 @@ const authController = {
     // Register User
     register: async (req, res) => {
         try {
-            const { name, email, password } = req.body;
+            const { name, email, password, role = 'user' } = req.body;
             if (!name || !email || !password) {
                 return response.validationError(res, 
                     'Name, email, and password are required');
             }
 
-            const newUser = await authService.register(name, email, password);
+            const newUser = await authService.register(name, email, password, role);
             return response.success(res, 
                 'User registered successfully', newUser, 201);
         } 

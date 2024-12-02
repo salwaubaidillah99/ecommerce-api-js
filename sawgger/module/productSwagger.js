@@ -11,6 +11,8 @@
  *   post:
  *     summary: Create a new product
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -76,6 +78,8 @@
  *   put:
  *     summary: Update a product
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -113,6 +117,8 @@
  *   delete:
  *     summary: Delete a product
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
